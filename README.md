@@ -2,7 +2,7 @@ This is one possible way to set different [serde](https://github.com/serde-rs/se
 
 Motivation:
 
-- Different pre-existing APIs refering to the same structure.
+- Having different pre-existing APIs refering to the same structure.
 - Related issue: https://github.com/serde-rs/serde/issues/1443
 
 ---
@@ -46,9 +46,21 @@ API 2:
 
 So the intention here is to have the same type of object (`A`) to be able to get constructed from the deserialization of both APIs. Since they are the same type of object, a single object definition is required. This means that maintanence is reduced, and multiple objects may be comparable/clonable to each other (assuming the traits were implemented), and so on..
 
----
-
 But this isn't for free. When you skim at the [Cargo.toml](Cargo.toml) you will see it.  
 For my particular use-case, which is having multiple APIs in multiple data formats for an enormous structure, it does pays off.
 
+---
+
 The final intention is to share this possibility and hopefully see better ways to do it 0/
+
+---
+
+The "design":
+
+- Multiple serde were required because multiple `Deserialize` implementation were required for the same object. So yeah.. `serde` and `serde_derive` are built multiple times (but their dependencies are built only once).
+    - The same version of `serde` can be used, even if they are at the same commit. They only need to diverge on the branch name.
+- Multiple data formats were also required, because each needed to be tied to a particular `serde::Deserialize` trait implementation.
+- Some changes to `serde` itself were made, namely:
+    - [Adding](https://github.com/swfsql/serde/blob/c183625898a329b5bfd2c3cb8a18f3010adb9aeb/serde_derive/src/lib.rs#L81) `serde1/2` attribute into the `proc_macro_derive`s gate. 
+    - [Adding][reading the attributes](https://github.com/swfsql/serde/blob/c183625898a329b5bfd2c3cb8a18f3010adb9aeb/serde_derive/src/internals/symbol.rs#L26) them also for when reading the attributes.
+    - And some other minor changes (which only makes sense it this ad-hoc use-case, unfortunately).
