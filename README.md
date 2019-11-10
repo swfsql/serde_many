@@ -62,5 +62,5 @@ The "design":
 - Multiple data formats were also required, because each needed to be tied to a particular `serde::Deserialize` trait implementation.
 - Some changes to `serde` itself were made, namely:
     - [Adding](https://github.com/swfsql/serde/blob/c183625898a329b5bfd2c3cb8a18f3010adb9aeb/serde_derive/src/lib.rs#L81) `serde1/2` attribute into the `proc_macro_derive`s gate. 
-    - [Adding][reading the attributes](https://github.com/swfsql/serde/blob/c183625898a329b5bfd2c3cb8a18f3010adb9aeb/serde_derive/src/internals/symbol.rs#L26) them also for when reading the attributes.
+    - [Adding](https://github.com/swfsql/serde/blob/c183625898a329b5bfd2c3cb8a18f3010adb9aeb/serde_derive/src/internals/symbol.rs#L26) them also for when reading the attributes.
     - And some other minor changes (which only makes sense it this ad-hoc use-case, unfortunately).
