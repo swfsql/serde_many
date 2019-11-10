@@ -1,0 +1,35 @@
+[package]
+name = "serde_many"
+version = "0.1.0"
+authors = ["Thiago <swfsql@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+[dependencies.serde1]
+version = "1.0.0"
+package = "serde"
+git = "https://github.com/swfsql/serde"
+branch = "serde-custom-symbol"
+features = ["derive"]
+
+[dependencies.serde2]
+version = "1.0.0"
+package = "serde"
+git = "https://github.com/swfsql/serde"
+branch = "serde-custom-symbol-2"
+features = ["derive"]
+
+[dependencies.serde_json1]
+version = "1.0"
+package = "serde_json"
+git = "https://github.com/swfsql/json"
+branch = "serde-custom-symbol"
+
+[dependencies.serde_json2]
+version = "1.0"
+package = "serde_json"
+git = "https://github.com/swfsql/json"
+branch = "serde-custom-symbol-2"
